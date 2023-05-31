@@ -18,6 +18,7 @@ public class Player extends Entity{
 	public int playerWidth=48, playerHeight = 48; 
 	int spriteCounter, spriteNum;
 	String direction=""; 
+	public boolean hidden = false; 
 	public Player(int x, int y) {
 		super(x, y);
 		setPlayerImg();
@@ -33,7 +34,7 @@ public class Player extends Entity{
 	
 	public void update(){
 		//y+=vely;
-	//x+=velx;
+		//x+=velx;
 		spriteCounter++;
 		if(spriteCounter>30) {
 			if(spriteNum==1) {
@@ -105,10 +106,10 @@ public class Player extends Entity{
 			image=right1;
 		else if(vely==0&&velx==0&&direction.equals("left"))
 			image=left1;
-		g2d.setColor(Color.red);
+		//g2d.setColor(Color.red);
 		
 		g2d.drawImage(image, x, y, 48, 48, null);
-		g2d.draw(hitBox);;
+		//g2d.draw(hitBox);
 	}
 public void setPlayerImg(){
 

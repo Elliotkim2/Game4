@@ -14,12 +14,23 @@ import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
 
 public class Monster extends Entity{
-	BufferedImage up1,up2, down1, down2,left1,left2,right1,right2;
+	BufferedImage m1,m2, gameOver;
 	String direction;
+	GameFrame gf;
+	Player p;
+	int count=0;
+	boolean kill=false;
+	boolean dead;
+	int speed; 
+	int monsterX, monsterY;
 	int actionLockcounter;
-	public Monster(int x, int y) {
+	int spriteCounter=0, spriteNum=1;
+	public Monster(int x, int y, GameFrame gf,Player p) {
 		super(x, y);
-		GameFrame gf;
+		monsterX=x;
+		monsterY=y;
+		this.gf=gf;
+		this.p= p;
 		String name="De";
 		int speed =10;
 		direction="down";
@@ -30,38 +41,66 @@ public class Monster extends Entity{
 	}
 public void getImage() {
 	try {
-		up1=ImageIO.read(new File("Mu1.png"));
-		up2=ImageIO.read(new File("Mu2.png"));
-		down1=ImageIO.read(new File("Md1.png"));
-		down2=ImageIO.read(new File("Md2.png"));
-		
-		left1=ImageIO.read(new File("Ml1.png"));
-		left2=ImageIO.read(new File("Ml2.png"));
-		right1=ImageIO.read(new File("Mr1.png"));
-		right2=ImageIO.read(new File("Mr2.png"));
+		m1=ImageIO.read(new File("m1.png"));
+		m2=ImageIO.read(new File("m2.png"));
+		gameOver=ImageIO.read(new File("gameOver.png"));
 		
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-}public void setAction() {
-	actionLockcounter++;
-	if(actionLockcounter==120) {
-		Random random= new Random();
-		int i= random.nextInt(100)+1;
-		if(i<=25) {
-			direction="up";
-			
-		}
-		if(i>25&&i<=50) {
-			direction="down";
-		}
-		if(i>50&&i<=75)
-			direction="left";
-		if(i>75&&i<=100) {
-			direction="right"; 
-		}
-		actionLockcounter=0;
-	}
+}public void draw(Graphics2D g2d) {
+	count++;
+	set();
+	BufferedImage image=null;
+	if(spriteNum==1) {
+		image=m1;
+	}else if(spriteNum==2)
+	image = m2;
+	
+	g2d.drawImage(image, monsterX, monsterY, 48, 48, null);
+
 }
+public void set() {
+	if(p.x+48>monsterX) {
+		monsterX+=speed;
+		}
+	
+	else if(p.x<x) {
+		monsterX-=speed;
+			}
+	else if(p.y>y) {
+		monsterY+=speed;
+		}
+	else if (p.y+48<y) {
+		monsterY-=speed;
+		}
+	else monsterY-=speed;
+if(kill==true) {
+	
+}else if (dead==true) {
+	
+	System.exit(0);
+}}
+public void update(Player p) {
+	monsterX += -(p.getXVel());
+	monsterY += -(p.getYVel()); 
+	//hitBox = new Rectangle(objectX, objectY, objectImg.getWidth(), objectImg.getHeight()); 
+//	set();
+	monsterY+=speed;
+	monsterX+=speed;
+			spriteCounter++;
+			if(spriteCounter>30) {
+				if(spriteNum==1) {
+					spriteNum=2;
+				}else if (spriteNum==2)
+			
+					spriteNum=1;
+				spriteCounter=0;
+					
+			}
+	
+	
+}
+
 }

@@ -12,7 +12,7 @@ public class GameObject implements ScrollObject{
 	private static double scrollConst = .95; 
 	private BufferedImage objectImg;
 	private String fileName; 
-	private Rectangle hitBox; 
+	public Rectangle hitBox; 
 	private int height,length;
 	
 	public GameObject(int objectX, int objectY, String fileName) {
@@ -108,7 +108,7 @@ public class GameObject implements ScrollObject{
 	
 	public void drawObject(Graphics2D g2d) {
 		g2d.drawImage(objectImg, objectX, objectY, null); 
-		g2d.draw(hitBox);
+		//g2d.draw(hitBox);
 	}
 	public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
 	    Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
@@ -124,22 +124,9 @@ public class GameObject implements ScrollObject{
 	@Override
 	
 	public void update(Player p) {
-		if(isTouchingPlayer(p)) {
-			if(letGo(p)) {
-				objectX += -(p.getXVel());
-				objectY += -(p.getYVel()); 
-				hitBox = new Rectangle(objectX, objectY, objectImg.getWidth(), objectImg.getHeight());
-			}else {
-			objectX += (p.getXVel());
-			objectY += (p.getYVel());
-			hitBox = new Rectangle(objectX, objectY, objectImg.getWidth(), objectImg.getHeight());
-			}	
-		}
-		else {
-			objectX += -(p.getXVel());
-			objectY += -(p.getYVel()); 
-			hitBox = new Rectangle(objectX, objectY, objectImg.getWidth(), objectImg.getHeight());
-		}
+		objectX += -(p.getXVel());
+		objectY += -(p.getYVel()); 
+		hitBox = new Rectangle(objectX, objectY, objectImg.getWidth(), objectImg.getHeight()); 
 		
 		
 		
